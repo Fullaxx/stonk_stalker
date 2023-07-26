@@ -4,7 +4,7 @@ A Dashboard to stalk your stocks
 ## Get the image from Docker Hub or build it locally
 ```
 docker pull fullaxx/stonk_stalker
-docker build -t="fullaxx/smtd" github.com/Fullaxx/stonk_stalker
+docker build -t="fullaxx/stonk_stalker" github.com/Fullaxx/stonk_stalker
 ```
 
 ## Run the dashboard with your symbol list
