@@ -35,7 +35,7 @@ def gen_html_table(cp, mp, tm, tbl):
 	html = '<table>'
 
 	html += '<tr>'
-	html += f'<th>{table_name}</th>'
+	html += f'<th><u>{table_name}</u></th>'
 	for symb in symb_list:
 		thclass = None
 		if(tm[symb] > 0): thclass='up'
