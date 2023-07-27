@@ -23,7 +23,7 @@ TRAVEL=BKNG,HLT,MAR,ABNB,UBER,LYFT
 docker run -d --rm -e TICKER_TABLES="TECH=AAPL,MSFT,GOOG,META,ORCL;CHIPS=NVDA,AMD,TSM,MU;AUTO=F,GM,TSLA,NIO,LI;TRAVEL=BKNG,HLT,MAR,ABNB,UBER,LYFT" -p 80:80 fullaxx/stonk_stalker
 ```
 
-## Run the dashboard with a set refresh value
+## Run the dashboard with a set refresh rate
 Default: 2 seconds during trading hours, otherwise 10 seconds
 ```
 docker run -d --rm -e HTMLREFRESH=30 -e TICKER_TABLES="TECH=AAPL,MSFT,GOOG,META,ORCL;CHIPS=NVDA,AMD,TSM,MU;AUTO=F,GM,TSLA,NIO,LI;TRAVEL=BKNG,HLT,MAR,ABNB,UBER,LYFT" -p 80:80 fullaxx/stonk_stalker
@@ -31,7 +31,7 @@ docker run -d --rm -e HTMLREFRESH=0 -e TICKER_TABLES="TECH=AAPL,MSFT,GOOG,META,O
 ```
 
 ## Run the dashboard with dark mode enabled
-DARK MODE IS NOT FUNCTIONAL YET
+DARK MODE IS NOT FUNCTIONAL YET (need to adjust table cell colors to fit dark mode)
 ```
 docker run -d --rm -e DARKMODE=1 -e TICKER_TABLES="TECH=AAPL,MSFT,GOOG,META,ORCL;CHIPS=NVDA,AMD,TSM,MU;AUTO=F,GM,TSLA,NIO,LI;TRAVEL=BKNG,HLT,MAR,ABNB,UBER,LYFT" -p 80:80 fullaxx/stonk_stalker
 ```
