@@ -86,7 +86,7 @@ def gen_html_table(cp, mp, tm, tbl):
 		elif(tm[symb] <= -4): tdclass='neg_four'
 		elif(tm[symb] <= -3): tdclass='neg_three'
 		elif(tm[symb] <= -2): tdclass='neg_two'
-		elif(tm[symb] <= -1): tdclass='neg_once'
+		elif(tm[symb] <= -1): tdclass='neg_one'
 		elif(tm[symb] < 0): tdclass='neg_small'
 		if tdclass: html += f'<td class={tdclass}>{move_str}%</td>'
 		else: html += f'<td>{move_str}%</td>'
