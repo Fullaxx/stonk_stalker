@@ -110,10 +110,11 @@ def gen_html(cp, mp, tm, tables_list):
 	html += gen_html_head()
 	html += '<body>'
 	html += '<center>'
-	html += '<h2>' + now_str + ' US/Eastern</h2>'
+	html += '<h2><a href=https://github.com/Fullaxx/stonk_stalker>Stonk Stalker</a></h2>'
+	html += '<h3>' + now_str + ' US/Eastern</h3>'
 	for tbl in tables_list:
 		html += gen_html_table(cp, mp, tm, tbl)
-	html += '</br><a href=https://github.com/Fullaxx/stonk_stalker>GitHub</a>'
+#	html += '</br><a href=https://github.com/Fullaxx/stonk_stalker>GitHub</a>'
 	html += '</center>'
 	html += '</body>'
 	html += '</html>'

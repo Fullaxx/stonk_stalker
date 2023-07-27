@@ -1,5 +1,8 @@
 # Stonk Stalker
-A Dashboard to stalk your stocks
+A simple dashboard to stalk your stocks, circa 1997
+
+## Example
+![Example](Stonk_Stalker.png)
 
 ## Get the image from Docker Hub or build it locally
 ```
