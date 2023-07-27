@@ -12,10 +12,23 @@ def bailmsg(*args, **kwargs):
 	print(*args, file=sys.stderr, **kwargs)
 	exit(1)
 
+# This function is pretty generic and could use some better logic to determine an active trading session
+def trading_is_active():
+	active = False
+	tz = timezone('US/Eastern')
+	now = datetime.now(tz)
+	day = now.strftime("%a")
+	hour = int(now.strftime("%H"))
+	if (day == 'Sun'): return False
+	if (day == 'Sat'): return False
+	if ((hour >= 9) and (hour <= 16)):
+		active = True
+	return active
+
 def write_html_to_file(html, filename):
 	with open(filename, 'w') as f: f.write(html)
 
-def gen_table(cp, mp, tm, tbl):
+def gen_html_table(cp, mp, tm, tbl):
 	table_name,symbols = tbl.split('=')
 	symb_list = symbols.split(',')
 
@@ -75,24 +88,31 @@ def gen_table(cp, mp, tm, tbl):
 	html += '</br>'
 	return html
 
-def gen_html(cp, mp, tm, tables_list):
-	tz = timezone('US/Eastern')
-	now = datetime.now(tz)
-	now_str = now.strftime("%c")
-	html = '<html>'
-	html += '<head>'
-	if os.getenv('NOREFRESH') is None:
-		html += '<meta http-equiv=refresh content=1; URL=/>'
+def gen_html_head():
+	html_refresh_val = 3 if trading_is_active() else 10
+	r = os.getenv('HTMLREFRESH')
+	if r is not None: html_refresh_val = int(r)
+	html = '<head>'
+	if html_refresh_val > 0:
+		html += f'<meta http-equiv=refresh content={html_refresh_val}; URL=/>'
 	if os.getenv('DARKMODE'):
 		html += '<link rel=stylesheet href=dashboard-dark.css>'
 	else:
 		html += '<link rel=stylesheet href=dashboard.css>'
 	html += '</head>'
+	return html
+
+def gen_html(cp, mp, tm, tables_list):
+	tz = timezone('US/Eastern')
+	now = datetime.now(tz)
+	now_str = now.strftime("%c")
+	html = '<html>'
+	html += gen_html_head()
 	html += '<body>'
 	html += '<center>'
 	html += '<h2>' + now_str + ' US/Eastern</h2>'
 	for tbl in tables_list:
-		html += gen_table(cp, mp, tm, tbl)
+		html += gen_html_table(cp, mp, tm, tbl)
 	html += '</br><a href=https://github.com/Fullaxx/stonk_stalker>GitHub</a>'
 	html += '</center>'
 	html += '</body>'
