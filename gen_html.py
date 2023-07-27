@@ -28,6 +28,23 @@ def trading_is_active():
 def write_html_to_file(html, filename):
 	with open(filename, 'w') as f: f.write(html)
 
+def write_loading_to_file(filename):
+	tz = timezone('US/Eastern')
+	now = datetime.now(tz)
+	now_str = now.strftime("%c")
+	html = '<html>'
+	html += '<head>'
+	html += '<meta http-equiv=refresh content=1; URL=/>'
+	html += '</head>'
+	html += '<body>'
+	html += '<center>'
+	html += '<h2>Loading Ticker Data ...</h2>'
+	html += '<h3>' + now_str + ' US/Eastern</h3>'
+	html += '</center>'
+	html += '</body>'
+	html += '</html>'
+	write_html_to_file(html, filename)
+
 def gen_html_table(cp, mp, tm, tbl):
 	table_name,symbols = tbl.split('=')
 	symb_list = symbols.split(',')
@@ -146,6 +163,7 @@ if __name__ == '__main__':
 	for tbl in tables_list:
 		symbols = tbl.split('=')[1]
 		symb_list += symbols.split(',')
+	write_loading_to_file('index.html')
 	load_prices(closePrice, marketPrice, tickerMotion, symb_list, tables_list, 0)
 	while True:
 		load_prices(closePrice, marketPrice, tickerMotion, symb_list, tables_list, 1)
