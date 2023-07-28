@@ -45,7 +45,7 @@ def write_loading_to_file(filename):
 	html += '</html>'
 	write_html_to_file(html, filename)
 
-def gen_html_table(cp, mp, tm, tbl):
+def gen_html_table(cp, mp, tm, mcap, tbl):
 	table_name,symbols = tbl.split('=')
 	symb_list = symbols.split(',')
 
@@ -101,6 +101,13 @@ def gen_html_table(cp, mp, tm, tbl):
 		html += f'<td>{price_formatted}</td>'
 	html += '</tr>'
 
+	if os.getenv('DISPLAY_MARKET_CAP') is not None:
+		html += '<tr>'
+		html += '<td>MCap</td>'
+		for symb in symb_list:
+			html += f'<td>{mcap[symb]}</td>'
+		html += '</tr>'
+
 	html += '</table>'
 	html += '</br>'
 	return html
@@ -119,7 +126,7 @@ def gen_html_head():
 	html += '</head>'
 	return html
 
-def gen_html(cp, mp, tm, tables_list):
+def gen_html(cp, mp, tm, mcap, tables_list):
 	tz = timezone('US/Eastern')
 	now = datetime.now(tz)
 	now_str = now.strftime("%c")
@@ -130,31 +137,47 @@ def gen_html(cp, mp, tm, tables_list):
 	html += '<h2><a href=https://github.com/Fullaxx/stonk_stalker>Stonk Stalker</a></h2>'
 	html += '<h3>' + now_str + ' US/Eastern</h3>'
 	for tbl in tables_list:
-		html += gen_html_table(cp, mp, tm, tbl)
+		html += gen_html_table(cp, mp, tm, mcap, tbl)
 #	html += '</br><a href=https://github.com/Fullaxx/stonk_stalker>GitHub</a>'
 	html += '</center>'
 	html += '</body>'
 	html += '</html>'
 	write_html_to_file(html, 'index.html')
 
-def load_prices(cp, mp, tm, symb_list, tables_list, initialized):
+def convert_market_cap(yfmcap):
+	if (yfmcap >= 1e12):
+		value = yfmcap/1e12
+		units = 'T'
+	elif (yfmcap >= 1e9):
+		value = yfmcap/1e9
+		units = 'B'
+	else:
+		value = yfmcap/1e6
+		units = 'M'
+	val_rounded = round(value, 1)
+	mc_str = "{:0.1f}".format(val_rounded) + units
+	return mc_str
+
+def load_prices(cp, mp, tm, mcap, symb_list, tables_list, initialized):
 	for symb in symb_list:
 		res = yf.Ticker(symb)
 #		cp[symb] = str(res.info['regularMarketPreviousClose'])
 		cp[symb] = str(res.info['previousClose'])
 		mp[symb] = str(res.info['currentPrice'])
+		mcap[symb] = convert_market_cap(res.info['marketCap'])
 		diff = float(mp[symb]) - float(cp[symb])
 		move_pct = 100 * (diff / float(cp[symb]))
 		tm[symb] = round(move_pct, 2)
 		print(symb + ': ' + mp[symb])
 		if initialized:
-			gen_html(closePrice, marketPrice, tickerMotion, tables_list)
+			gen_html(closePrice, marketPrice, tickerMotion, mcap, tables_list)
 
 if __name__ == '__main__':
 	symb_list = []
 	closePrice = {}
 	marketPrice = {}
 	tickerMotion = {}
+	marketCap = {}
 	wwwdir = os.getenv('WWWDIR')
 	if wwwdir is not None: os.chdir(wwwdir)
 	ticker_tables = os.getenv('TICKER_TABLES')
@@ -164,7 +187,7 @@ if __name__ == '__main__':
 		symbols = tbl.split('=')[1]
 		symb_list += symbols.split(',')
 	write_loading_to_file('index.html')
-	load_prices(closePrice, marketPrice, tickerMotion, symb_list, tables_list, 0)
+	load_prices(closePrice, marketPrice, tickerMotion, marketCap, symb_list, tables_list, 0)
 	while True:
-		load_prices(closePrice, marketPrice, tickerMotion, symb_list, tables_list, 1)
+		load_prices(closePrice, marketPrice, tickerMotion, marketCap, symb_list, tables_list, 1)
 		time.sleep(1)
