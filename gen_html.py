@@ -64,10 +64,7 @@ def gen_html_table(cp, mp, tm, mcap, tbl):
 	html += '<tr>'
 	html += '<td>$</td>'
 	for symb in symb_list:
-		price = float(mp[symb])
-		price_rounded = round(price, 2)
-		price_formatted = "{:0.2f}".format(price_rounded)
-		html += f'<td>{price_formatted}</td>'
+		html += f'<td>{mp[symb]}</td>'
 	html += '</tr>'
 
 	html += '<tr>'
@@ -95,10 +92,7 @@ def gen_html_table(cp, mp, tm, mcap, tbl):
 	html += '<tr>'
 	html += '<td>Close</td>'
 	for symb in symb_list:
-		price = float(cp[symb])
-		price_rounded = round(price, 2)
-		price_formatted = "{:0.2f}".format(price_rounded)
-		html += f'<td>{price_formatted}</td>'
+		html += f'<td>{cp[symb]}</td>'
 	html += '</tr>'
 
 	if os.getenv('DISPLAY_MARKET_CAP') is not None:
@@ -158,16 +152,23 @@ def convert_market_cap(yfmcap):
 	mc_str = "{:0.1f}".format(val_rounded) + units
 	return mc_str
 
+def calc_symb_move(cp, mp, symb):
+	diff = float(mp[symb]) - float(cp[symb])
+	move_pct = 100 * (diff / float(cp[symb]))
+	return round(move_pct, 2)
+
+def format_price(p):
+	r = round(float(p), 2)
+	return "{:0.2f}".format(r)
+
 def load_prices(cp, mp, tm, mcap, symb_list, tables_list, initialized):
 	for symb in symb_list:
 		res = yf.Ticker(symb)
 #		cp[symb] = str(res.info['regularMarketPreviousClose'])
-		cp[symb] = str(res.info['previousClose'])
-		mp[symb] = str(res.info['currentPrice'])
+		cp[symb] = format_price(res.info['previousClose'])
+		mp[symb] = format_price(res.info['currentPrice'])
 		mcap[symb] = convert_market_cap(res.info['marketCap'])
-		diff = float(mp[symb]) - float(cp[symb])
-		move_pct = 100 * (diff / float(cp[symb]))
-		tm[symb] = round(move_pct, 2)
+		tm[symb] = calc_symb_move(cp, mp, symb)
 		print(symb + ': ' + mp[symb])
 		if initialized:
 			gen_html(closePrice, marketPrice, tickerMotion, mcap, tables_list)
