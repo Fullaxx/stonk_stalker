@@ -95,7 +95,8 @@ def gen_html_table(cp, mp, tm, mcap, tbl):
 		html += f'<td>{cp[symb]}</td>'
 	html += '</tr>'
 
-	if os.getenv('DISPLAY_MARKET_CAP') is not None:
+	mc_toggle = os.getenv('DISPLAY_MARKET_CAP')
+	if (mc_toggle is not None) and (mc_toggle == '1'):
 		html += '<tr>'
 		html += '<td>MCap</td>'
 		for symb in symb_list:
