@@ -54,11 +54,10 @@ def gen_html_table(cp, mp, tm, mcap, tbl):
 	html += '<tr>'
 	html += f'<th><u>{table_name}</u></th>'
 	for symb in symb_list:
-		thclass = None
-		if(tm[symb] > 0): thclass='up'
-		if(tm[symb] < 0): thclass='down'
-		if thclass: html += f'<th class={thclass}>{symb}</th>'
-		else: html += f'<th>{symb}</th>'
+		thclass = ''
+		if(tm[symb] > 0): thclass=' class=up'
+		if(tm[symb] < 0): thclass=' class=down'
+		html += f'<th{thclass}><a href=https://finance.yahoo.com/quote/{symb}>{symb}</a></th>'
 	html += '</tr>'
 
 	html += '<tr>'
