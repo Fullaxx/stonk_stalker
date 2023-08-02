@@ -72,12 +72,18 @@ def gen_html_table(cp, mp, tm, mcap, tbl):
 		tdclass = None
 		move_formatted = "{:0.2f}".format(tm[symb])
 		move_str = '+' + str(move_formatted) if tm[symb] > 0 else str(move_formatted)
-		if(tm[symb] >= 5): tdclass='pos_five'
+		if(tm[symb] >= 8): tdclass='pos_eight'
+		elif(tm[symb] >= 7): tdclass='pos_seven'
+		elif(tm[symb] >= 6): tdclass='pos_six'
+		elif(tm[symb] >= 5): tdclass='pos_five'
 		elif(tm[symb] >= 4): tdclass='pos_four'
 		elif(tm[symb] >= 3): tdclass='pos_three'
 		elif(tm[symb] >= 2): tdclass='pos_two'
 		elif(tm[symb] >= 1): tdclass='pos_one'
 		elif(tm[symb] > 0): tdclass='pos_small'
+		elif(tm[symb] <= -8): tdclass='neg_eight'
+		elif(tm[symb] <= -7): tdclass='neg_seven'
+		elif(tm[symb] <= -6): tdclass='neg_six'
 		elif(tm[symb] <= -5): tdclass='neg_five'
 		elif(tm[symb] <= -4): tdclass='neg_four'
 		elif(tm[symb] <= -3): tdclass='neg_three'
