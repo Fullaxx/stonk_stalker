@@ -6,6 +6,10 @@ table, th, td {
 #	border-radius: 10px;
 }
 
+a {
+	color: #000000;
+}
+
 .up {
 	background-color: #88FF88;
 }
