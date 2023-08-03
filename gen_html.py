@@ -5,6 +5,8 @@ import os
 import sys
 import json
 import time
+from pytz import timezone
+from datetime import datetime
 import yfinance as yf
 
 def bailmsg(*args, **kwargs):
@@ -80,7 +82,7 @@ def gen_html_body():
 	html += '</body>'
 	return html
 
-def gen_html(symb_list, tables_list):
+def gen_index_html(symb_list, tables_list):
 	html = '<!DOCTYPE html>'
 	html += '<html lang="en">'
 	html += gen_html_head(symb_list)
@@ -96,20 +98,34 @@ def load_prices(symb_list, tables_list):
 		print(f'Writing {filename} ...')
 		write_to_file(info_str, filename)
 
+# This function is pretty generic and could use some better logic to determine an active trading session
+def trading_is_active():
+	active = False
+	tz = timezone('US/Eastern')
+	now = datetime.now(tz)
+	day = now.strftime("%a")
+	hour = int(now.strftime("%H"))
+	if (day == 'Sun'): return False
+	if (day == 'Sat'): return False
+	if ((hour >= 9) and (hour <= 16)):
+		active = True
+	return active
+
 if __name__ == '__main__':
-	symb_list = []
 	wwwdir = os.getenv('WWWDIR')
 	if wwwdir is not None: os.chdir(wwwdir)
 	os.makedirs('symbols', mode = 0o755, exist_ok = True)
 	ticker_tables = os.getenv('TICKER_TABLES')
 	if ticker_tables is None: bailmsg('Set TICKER_TABLES')
 
+	symb_list = []
 	tables_list = ticker_tables.split(';')
 	for tbl in tables_list:
 		symbols = tbl.split('=')[1]
 		symb_list += symbols.split(',')
 
-	gen_html(symb_list, tables_list)
+	gen_index_html(symb_list, tables_list)
 	while True:
 		load_prices(symb_list, tables_list)
-		time.sleep(1)
+		sleep_time = 1 if trading_is_active() else 30
+		time.sleep(sleep_time)
