@@ -120,9 +120,9 @@ def gen_html_head():
 	if html_refresh_val > 0:
 		html += f'<meta http-equiv=refresh content={html_refresh_val}; URL=/>'
 	if os.getenv('DARKMODE'):
-		html += '<link rel=stylesheet href=dashboard-dark.css>'
+		html += '<link rel=stylesheet href=static/dashboard-dark.css>'
 	else:
-		html += '<link rel=stylesheet href=dashboard.css>'
+		html += '<link rel=stylesheet href=static/dashboard.css>'
 	html += '</head>'
 	return html
 

@@ -30,8 +30,7 @@ RUN apt-get update && \
 # Prepare the image
 COPY supervisord.conf /etc/supervisor/supervisord.conf
 COPY gen_html.py /app/
-COPY css/dashboard.css /www/dashboard.css
-COPY css/dashboard-dark.css /www/dashboard-dark.css
+COPY static/* /www/static/
 COPY --from=build /dark/darkhttpd.exe /app/
 
 # ------------------------------------------------------------------------------
