@@ -40,4 +40,3 @@ EXPOSE 80
 # ------------------------------------------------------------------------------
 # Define default command
 CMD ["supervisord", "-c", "/etc/supervisor/supervisord.conf"]
-# CMD ["ls", "-l", "/app"]
