@@ -11,58 +11,86 @@ table, th, td {
 #	border-radius: 10px;
 }
 
-.up {
-	background-color: #88FF88;
+a {
+	color: #000000;
 }
 
-.down {
-	background-color: #FF8888;
+.symb_up {
+	background-color: #AAFFAA;
 }
 
-.pos_five {
+.symb_down {
+	background-color: #FFAAAA;
+}
+
+.pos_eight {
 	background-color: #00FF00;
 }
 
-.pos_four {
+.pos_seven {
+	background-color: #20FF20;
+}
+
+.pos_six {
 	background-color: #40FF40;
 }
 
-.pos_three {
+.pos_five {
+	background-color: #60FF60;
+}
+
+.pos_four {
 	background-color: #80FF80;
 }
 
-.pos_two {
+.pos_three {
 	background-color: #A0FFA0;
 }
 
-.pos_one {
+.pos_two {
 	background-color: #C0FFC0;
+}
+
+.pos_one {
+	background-color: #D0FFD0;
 }
 
 .pos_small {
 	background-color: #E0FFE0;
 }
 
-.neg_five {
-	background-color: #FF0000;
-}
-
-.neg_four {
-	background-color: #FF4040;
-}
-
-.neg_three {
-	background-color: #FF8080;
-}
-
-.neg_two {
-	background-color: #FFA0A0;
+.neg_small {
+	background-color: #FFE0E0;
 }
 
 .neg_one {
+	background-color: #FFD0D0;
+}
+
+.neg_two {
 	background-color: #FFC0C0;
 }
 
-.neg_small {
-	background-color: #FFE0E0;
+.neg_three {
+	background-color: #FFA0A0;
+}
+
+.neg_four {
+	background-color: #FF8080;
+}
+
+.neg_five {
+	background-color: #FF6060;
+}
+
+.neg_six {
+	background-color: #FF4040;
+}
+
+.neg_seven {
+	background-color: #FF2020;
+}
+
+.neg_eight {
+	background-color: #FF0000;
 }
