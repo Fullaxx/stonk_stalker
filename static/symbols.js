@@ -41,24 +41,24 @@ function header_update(symb, info)
 
 function update_move_color(e, pct)
 {
-       if(pct >= 8)  { e.classList.add('pos_eight'); }
+       if(pct >=  8) { e.classList.add('pos_eight'); }
   else if(pct <= -8) { e.classList.add('neg_eight'); }
-  else if(pct >= 7)  { e.classList.add('pos_seven'); }
+  else if(pct >=  7) { e.classList.add('pos_seven'); }
   else if(pct <= -7) { e.classList.add('neg_seven'); }
-  else if(pct >= 6)  { e.classList.add('pos_six'); }
+  else if(pct >=  6) { e.classList.add('pos_six'); }
   else if(pct <= -6) { e.classList.add('neg_six'); }
-  else if(pct >= 5)  { e.classList.add('pos_five'); }
+  else if(pct >=  5) { e.classList.add('pos_five'); }
   else if(pct <= -5) { e.classList.add('neg_five'); }
-  else if(pct >= 4)  { e.classList.add('pos_four'); }
+  else if(pct >=  4) { e.classList.add('pos_four'); }
   else if(pct <= -4) { e.classList.add('neg_four'); }
-  else if(pct >= 3)  { e.classList.add('pos_three'); }
+  else if(pct >=  3) { e.classList.add('pos_three'); }
   else if(pct <= -3) { e.classList.add('neg_three'); }
-  else if(pct >= 2)  { e.classList.add('pos_two'); }
+  else if(pct >=  2) { e.classList.add('pos_two'); }
   else if(pct <= -2) { e.classList.add('neg_two'); }
-  else if(pct >= 1)  { e.classList.add('pos_one'); }
+  else if(pct >=  1) { e.classList.add('pos_one'); }
   else if(pct <= -1) { e.classList.add('neg_one'); }
-  else if(pct > 0)   { e.classList.add('pos_small'); }
-  else if(pct < 0)   { e.classList.add('neg_small'); }
+  else if(pct  >  0) { e.classList.add('pos_small'); }
+  else if(pct  <  0) { e.classList.add('neg_small'); }
 }
 
 function move_update(symb, info)
