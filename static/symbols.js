@@ -108,33 +108,31 @@ function mcap_update(symb, info)
   td.innerHTML = value.toFixed(1) + units;
 }
 
-function symbol_update(symb)
+function update_symbols()
 {
-  console.log('Running symbol_update for ' + symb)
-  $.getJSON( "symbols/"+symb+".json", function(data) {
-    header_update(symb, data);
-    price_update(symb, data);
-    close_update(symb, data);
-    move_update(symb, data);
-    mcap_update(symb, data);
+  $.getJSON( "market.json", function(data) {
+    for (let key in data) {
+      //console.log(key, data[key]);
+      header_update(key, data[key]);
+      price_update(key, data[key]);
+      close_update(key, data[key]);
+      move_update(key, data[key]);
+      mcap_update(key, data[key]);
+    }
   });
 }
 
-function symbol_init(symbol_list)
+function symbol_init()
 {
-  for(var i = 0; i < symbol_list.length; i++) {
-    var symb = symbol_list[i];
-    console.log('Launching symbol_update for ' + symb);
-    setInterval(symbol_update, 1000, symb);
-    //setInterval(function(){ symbol_update(symb); }, 1000);
-  }
+  setInterval(update_symbols, 1000);
+  //setInterval(function(){ symbol_update(); }, 1000);
 }
 
 function time_update() {
   now = new Date(new Date().toLocaleString('en', {timeZone: 'America/New_York'}))
   a = now.toString().split(' ');
   time_str = a[0] + ' ' + a[1] + ' ' + a[2] + ' ' + a[3] + ' ' + a[4] + ' US/Eastern'
-  console.log(time_str)
+  //console.log(time_str)
   $('[id="time"]').html(time_str);
 }
 
