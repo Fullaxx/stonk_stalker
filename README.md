@@ -15,13 +15,6 @@ docker build -t="fullaxx/stonk_stalker" github.com/Fullaxx/stonk_stalker
 docker run -d --rm -e DISPLAY_MARKET_CAP=1 -e TICKER_TABLES="TECH=AAPL,MSFT,GOOG;CHIPS=NVDA,AMD,TSM;AUTO=F,GM,TSLA" -p 80:80 fullaxx/stonk_stalker
 ```
 
-## Stalk with a set refresh rate
-Default: 2 seconds during trading hours, otherwise 10 seconds
-```
-docker run -d --rm -e HTMLREFRESH=30 -e TICKER_TABLES="TECH=AAPL,MSFT,GOOG;CHIPS=NVDA,AMD,TSM;AUTO=F,GM,TSLA" -p 80:80 fullaxx/stonk_stalker
-docker run -d --rm -e HTMLREFRESH=0 -e TICKER_TABLES="TECH=AAPL,MSFT,GOOG;CHIPS=NVDA,AMD,TSM;AUTO=F,GM,TSLA" -p 80:80 fullaxx/stonk_stalker
-```
-
 ## Stalk with dark mode enabled
 DARK MODE IS NOT FUNCTIONAL YET (need to adjust table cell colors to fit dark mode)
 ```
