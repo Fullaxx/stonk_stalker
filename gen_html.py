@@ -58,7 +58,7 @@ def gen_html_table(tbl):
 	html += '</br>'
 	return html
 
-def gen_html_head():
+def gen_html_head(json_update_interval):
 	html = '<head>'
 	if os.getenv('DARKMODE'):
 		html += '<link rel="stylesheet" href="static/dashboard-dark.css">'
@@ -67,7 +67,7 @@ def gen_html_head():
 	html += '<script src="static/jquery-3.7.0.min.js"></script>'
 	html += '<script src="static/symbols.js"></script>'
 	html += '<script>$(document).ready(function(){ time_init(); });</script>'
-	html += '<script>$(document).ready(function(){ symbol_init(); });</script>'
+	html += '<script>$(document).ready(function(){ symbol_init(' + json_update_interval + '); });</script>'
 	html += '</head>'
 	return html
 
@@ -83,10 +83,10 @@ def gen_html_body():
 	html += '</body>'
 	return html
 
-def gen_index_html(tables_list):
+def gen_index_html(tables_list, json_update_interval):
 	html = '<!DOCTYPE html>'
 	html += '<html lang="en">'
-	html += gen_html_head()
+	html += gen_html_head(json_update_interval)
 	html += gen_html_body()
 	html += '</html>'
 	write_to_file(html, 'index.html')
@@ -132,7 +132,7 @@ if __name__ == '__main__':
 		symb_list += symbols.split(',')
 
 	marketdb = {}
-	gen_index_html(tables_list)
+	gen_index_html(tables_list, '1000')
 	while True:
 		load_prices(symb_list, marketdb)
 		sleep_time = 1 if trading_is_active() else 30

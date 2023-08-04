@@ -122,10 +122,10 @@ function update_symbols()
   });
 }
 
-function symbol_init()
+function symbol_init(json_update_interval)
 {
-  setInterval(update_symbols, 1000);
-  //setInterval(function(){ symbol_update(); }, 1000);
+  setInterval(update_symbols, json_update_interval);
+  //setInterval(function(){ symbol_update(); }, json_update_interval);
 }
 
 function time_update() {
