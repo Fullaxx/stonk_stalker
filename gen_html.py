@@ -58,7 +58,7 @@ def gen_html_table(tbl):
 	html += '</br>'
 	return html
 
-def gen_html_head(symb_list):
+def gen_html_head():
 	html = '<head>'
 	if os.getenv('DARKMODE'):
 		html += '<link rel="stylesheet" href="static/dashboard-dark.css">'
@@ -67,7 +67,7 @@ def gen_html_head(symb_list):
 	html += '<script src="static/jquery-3.7.0.min.js"></script>'
 	html += '<script src="static/symbols.js"></script>'
 	html += '<script>$(document).ready(function(){ time_init(); });</script>'
-	html += '<script>$(document).ready(function(){ symbol_init(' + str(symb_list) +'); });</script>'
+	html += '<script>$(document).ready(function(){ symbol_init(); });</script>'
 	html += '</head>'
 	return html
 
@@ -82,21 +82,27 @@ def gen_html_body():
 	html += '</body>'
 	return html
 
-def gen_index_html(symb_list, tables_list):
+def gen_index_html(tables_list):
 	html = '<!DOCTYPE html>'
 	html += '<html lang="en">'
-	html += gen_html_head(symb_list)
+	html += gen_html_head()
 	html += gen_html_body()
 	html += '</html>'
 	write_to_file(html, 'index.html')
 
-def load_prices(symb_list, tables_list):
+def load_prices(symb_list, marketdb):
 	for symb in symb_list:
+		symb_data = {}
 		res = yf.Ticker(symb)
-		info_str = json.dumps(res.info)
-		filename = f'symbols/{symb}.json'
+		symb_data['regularMarketPreviousClose'] = res.info['regularMarketPreviousClose']
+		symb_data['previousClose'] = res.info['previousClose']
+		symb_data['currentPrice'] = res.info['currentPrice']
+		symb_data['marketCap'] = res.info['marketCap']
+		marketdb[symb] = symb_data
+		market_str = json.dumps(marketdb)
+		filename = f'market.json'
 		print(f'Writing {filename} ...')
-		write_to_file(info_str, filename)
+		write_to_file(market_str, filename)
 
 # This function is pretty generic and could use some better logic to determine an active trading session
 def trading_is_active():
@@ -114,7 +120,7 @@ def trading_is_active():
 if __name__ == '__main__':
 	wwwdir = os.getenv('WWWDIR')
 	if wwwdir is not None: os.chdir(wwwdir)
-	os.makedirs('symbols', mode = 0o755, exist_ok = True)
+
 	ticker_tables = os.getenv('TICKER_TABLES')
 	if ticker_tables is None: bailmsg('Set TICKER_TABLES')
 
@@ -124,8 +130,9 @@ if __name__ == '__main__':
 		symbols = tbl.split('=')[1]
 		symb_list += symbols.split(',')
 
-	gen_index_html(symb_list, tables_list)
+	marketdb = {}
+	gen_index_html(tables_list)
 	while True:
-		load_prices(symb_list, tables_list)
+		load_prices(symb_list, marketdb)
 		sleep_time = 1 if trading_is_active() else 30
 		time.sleep(sleep_time)
