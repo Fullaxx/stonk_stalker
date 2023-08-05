@@ -125,6 +125,9 @@ if __name__ == '__main__':
 	ticker_tables = os.getenv('TICKER_TABLES')
 	if ticker_tables is None: bailmsg('Set TICKER_TABLES')
 
+	json_update_interval = os.getenv('JSON_UPDATE')
+	if json_update_interval is None: json_update_interval = '1000'
+
 	symb_list = []
 	tables_list = ticker_tables.split(';')
 	for tbl in tables_list:
@@ -132,7 +135,7 @@ if __name__ == '__main__':
 		symb_list += symbols.split(',')
 
 	marketdb = {}
-	gen_index_html(tables_list, '1000')
+	gen_index_html(tables_list, json_update_interval)
 	while True:
 		load_prices(symb_list, marketdb)
 		sleep_time = 1 if trading_is_active() else 30

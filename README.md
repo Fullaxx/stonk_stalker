@@ -33,3 +33,9 @@ TRAVEL=BKNG,HLT,MAR,ABNB,UBER,LYFT
 ```
 docker run -d --rm -e TICKER_TABLES="TECH=AAPL,MSFT,GOOG,META,ORCL;CHIPS=NVDA,AMD,TSM,MU;AUTO=F,GM,TSLA,NIO,LI;TRAVEL=BKNG,HLT,MAR,ABNB,UBER,LYFT" -p 80:80 fullaxx/stonk_stalker
 ```
+
+## Set the JSON refresh interval
+Default: 1000ms
+```
+docker run -d --rm -e JSON_UPDATE=5000 -e TICKER_TABLES="TECH=AAPL,MSFT,GOOG;CHIPS=NVDA,AMD,TSM;AUTO=F,GM,TSLA" -p 80:80 fullaxx/stonk_stalker
+```
