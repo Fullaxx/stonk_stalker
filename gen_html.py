@@ -54,6 +54,14 @@ def gen_html_table(tbl):
 			html += f'<td id={symb}_cap></td>'
 		html += '</tr>'
 
+	fpe_toggle = os.getenv('DISPLAY_FPE_RATIO')
+	if (fpe_toggle is not None) and (fpe_toggle == '1'):
+		html += '<tr>'
+		html += '<td>FPE</td>'
+		for symb in symb_list:
+			html += f'<td id={symb}_fpe></td>'
+		html += '</tr>'
+
 	html += '</table>'
 	html += '</br>'
 	return html
@@ -99,6 +107,12 @@ def load_prices(symb_list, marketdb):
 		symb_data['previousClose'] = res.info['previousClose']
 		symb_data['currentPrice'] = res.info['currentPrice']
 		symb_data['marketCap'] = res.info['marketCap']
+		if 'trailingPE' in res.info: symb_data['trailingPE'] = res.info['trailingPE']
+		else: print(f'{symb} has no trailingPE object')
+		if 'forwardPE' in res.info: symb_data['forwardPE'] = res.info['forwardPE']
+		else: print(f'{symb} has no forwardPE object')
+		if 'pegRatio' in res.info: symb_data['pegRatio'] = res.info['pegRatio']
+		else: print(f'{symb} has no pegRatio object')
 		marketdb[symb] = symb_data
 		market_str = json.dumps(marketdb)
 		filename = f'market.json'

@@ -108,6 +108,14 @@ function mcap_update(symb, info)
   td.innerHTML = value.toFixed(1) + units;
 }
 
+function fpe_update(symb, info)
+{
+  td = document.getElementById(symb + "_fpe");
+  if(!td) { return; }
+  pe = info.forwardPE;
+  td.innerHTML = pe.toFixed(2);
+}
+
 function update_symbols()
 {
   $.getJSON( "market.json", function(data) {
@@ -118,6 +126,7 @@ function update_symbols()
       close_update(key, data[key]);
       move_update(key, data[key]);
       mcap_update(key, data[key]);
+      fpe_update(key, data[key]);
     }
   });
 }
