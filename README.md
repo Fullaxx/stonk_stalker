@@ -10,7 +10,7 @@ docker pull fullaxx/stonk_stalker
 docker build -t="fullaxx/stonk_stalker" github.com/Fullaxx/stonk_stalker
 ```
 
-## Stalk with Extra Info
+## Stalk with extra info
 Market Cap info: DISPLAY_MARKET_CAP=1 \
 Forward PE Ratio: DISPLAY_FPE_RATIO=1
 ```
