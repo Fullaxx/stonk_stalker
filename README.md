@@ -10,16 +10,12 @@ docker pull fullaxx/stonk_stalker
 docker build -t="fullaxx/stonk_stalker" github.com/Fullaxx/stonk_stalker
 ```
 
-## Stalk with Market Cap
+## Stalk with extra info
+Market Cap info: DISPLAY_MARKET_CAP=1 \
+Forward PE Ratio: DISPLAY_FPE_RATIO=1
 ```
 docker run -d --rm -e DISPLAY_MARKET_CAP=1 -e TICKER_TABLES="TECH=AAPL,MSFT,GOOG;CHIPS=NVDA,AMD,TSM;AUTO=F,GM,TSLA" -p 80:80 fullaxx/stonk_stalker
-```
-
-## Stalk with a set refresh rate
-Default: 2 seconds during trading hours, otherwise 10 seconds
-```
-docker run -d --rm -e HTMLREFRESH=30 -e TICKER_TABLES="TECH=AAPL,MSFT,GOOG;CHIPS=NVDA,AMD,TSM;AUTO=F,GM,TSLA" -p 80:80 fullaxx/stonk_stalker
-docker run -d --rm -e HTMLREFRESH=0 -e TICKER_TABLES="TECH=AAPL,MSFT,GOOG;CHIPS=NVDA,AMD,TSM;AUTO=F,GM,TSLA" -p 80:80 fullaxx/stonk_stalker
+docker run -d --rm -e DISPLAY_FPE_RATIO=1  -e TICKER_TABLES="TECH=AAPL,MSFT,GOOG;CHIPS=NVDA,AMD,TSM;AUTO=F,GM,TSLA" -p 80:80 fullaxx/stonk_stalker
 ```
 
 ## Stalk with dark mode enabled
@@ -39,4 +35,10 @@ AUTO=F,GM,TSLA,NIO,LI \
 TRAVEL=BKNG,HLT,MAR,ABNB,UBER,LYFT
 ```
 docker run -d --rm -e TICKER_TABLES="TECH=AAPL,MSFT,GOOG,META,ORCL;CHIPS=NVDA,AMD,TSM,MU;AUTO=F,GM,TSLA,NIO,LI;TRAVEL=BKNG,HLT,MAR,ABNB,UBER,LYFT" -p 80:80 fullaxx/stonk_stalker
+```
+
+## Set the JSON refresh interval
+Default: 1000ms
+```
+docker run -d --rm -e JSON_UPDATE=5000 -e TICKER_TABLES="TECH=AAPL,MSFT,GOOG;CHIPS=NVDA,AMD,TSM;AUTO=F,GM,TSLA" -p 80:80 fullaxx/stonk_stalker
 ```
