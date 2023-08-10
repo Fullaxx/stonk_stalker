@@ -68,6 +68,7 @@ def gen_html_table(tbl):
 
 def gen_html_head(json_update_interval):
 	html = '<head>'
+	html += '<title>Stonk Stalker</title>'
 	if os.getenv('DARKMODE'):
 		html += '<link rel="stylesheet" href="static/dashboard-dark.css">'
 	else:
