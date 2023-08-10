@@ -84,7 +84,7 @@ def gen_html_body():
 	html = '<body>'
 	html += '<center>'
 	html += '<h2>Stonk Stalker</h2>'
-	html += '<h3><p id="time"></p></h3>'
+	html += '<h3><div id="time"></div></h3>'
 	for tbl in tables_list:
 		html += gen_html_table(tbl)
 	html += '<a href="https://github.com/Fullaxx/stonk_stalker">Source Code on GitHub</a>'
