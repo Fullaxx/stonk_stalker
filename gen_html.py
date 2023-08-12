@@ -100,20 +100,27 @@ def gen_index_html(tables_list, json_update_interval):
 	html += '</html>'
 	write_to_file(html, 'index.html')
 
-def load_prices(symb_list, marketdb):
+def update_symbol_data(symb, symb_data, info, obj_name):
+	if obj_name not in info:
+		print(f'{symb} has no {obj_name} object')
+	else:
+		symb_data[obj_name] = info[obj_name]
+
+def load_market_data(symb_list, marketdb):
 	for symb in symb_list:
 		symb_data = {}
 		res = yf.Ticker(symb)
-		symb_data['regularMarketPreviousClose'] = res.info['regularMarketPreviousClose']
-		symb_data['previousClose'] = res.info['previousClose']
-		symb_data['currentPrice'] = res.info['currentPrice']
-		symb_data['marketCap'] = res.info['marketCap']
-		if 'trailingPE' in res.info: symb_data['trailingPE'] = res.info['trailingPE']
-		else: print(f'{symb} has no trailingPE object')
-		if 'forwardPE' in res.info: symb_data['forwardPE'] = res.info['forwardPE']
-		else: print(f'{symb} has no forwardPE object')
-		if 'pegRatio' in res.info: symb_data['pegRatio'] = res.info['pegRatio']
-		else: print(f'{symb} has no pegRatio object')
+		update_symbol_data(symb, symb_data, res.info, 'currentPrice')
+		update_symbol_data(symb, symb_data, res.info, 'forwardPE')
+		update_symbol_data(symb, symb_data, res.info, 'marketCap')
+		update_symbol_data(symb, symb_data, res.info, 'pegRatio')
+		update_symbol_data(symb, symb_data, res.info, 'previousClose')
+		update_symbol_data(symb, symb_data, res.info, 'regularMarketPreviousClose')
+		update_symbol_data(symb, symb_data, res.info, 'revenuePerShare')
+		update_symbol_data(symb, symb_data, res.info, 'shortPercentOfFloat')
+		update_symbol_data(symb, symb_data, res.info, 'shortRatio')
+		update_symbol_data(symb, symb_data, res.info, 'totalCashPerShare')
+		update_symbol_data(symb, symb_data, res.info, 'trailingPE')
 		marketdb[symb] = symb_data
 		market_str = json.dumps(marketdb)
 		filename = f'market.json'
@@ -152,6 +159,6 @@ if __name__ == '__main__':
 	marketdb = {}
 	gen_index_html(tables_list, json_update_interval)
 	while True:
-		load_prices(symb_list, marketdb)
+		load_market_data(symb_list, marketdb)
 		sleep_time = 1 if trading_is_active() else 30
 		time.sleep(sleep_time)
