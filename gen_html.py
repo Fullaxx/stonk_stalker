@@ -115,6 +115,7 @@ def load_market_data(symb_list, marketdb):
 		update_symbol_data(symb, symb_data, res.info, 'marketCap')
 		update_symbol_data(symb, symb_data, res.info, 'pegRatio')
 		update_symbol_data(symb, symb_data, res.info, 'previousClose')
+		update_symbol_data(symb, symb_data, res.info, 'priceToSalesTrailing12Months')
 		update_symbol_data(symb, symb_data, res.info, 'regularMarketPreviousClose')
 		update_symbol_data(symb, symb_data, res.info, 'revenuePerShare')
 		update_symbol_data(symb, symb_data, res.info, 'shortPercentOfFloat')
