@@ -7,7 +7,7 @@ from argparse import ArgumentParser
 
 def delete_if_exists(stock_d, key):
 	if key in stock_d:
-		del stock_d['key']
+		del stock_d[key]
 
 if __name__ == '__main__':
 	parser = ArgumentParser()

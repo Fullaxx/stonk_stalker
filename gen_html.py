@@ -102,7 +102,7 @@ def gen_index_html(tables_list, json_update_interval):
 
 def delete_if_exists(stock_d, key):
 	if key in stock_d:
-		del stock_d['key']
+		del stock_d[key]
 
 def load_market_data(symb_list, marketdb):
 	for symb in symb_list:
