@@ -100,12 +100,16 @@ def gen_index_html(tables_list, json_update_interval):
 	html += '</html>'
 	write_to_file(html, 'index.html')
 
+def delete_if_exists(stock_d, key):
+	if key in stock_d:
+		del stock_d['key']
+
 def load_market_data(symb_list, marketdb):
 	for symb in symb_list:
 		symb_data = {}
 		res = yf.Ticker(symb)
-		del res.info['companyOfficers']
-		del res.info['longBusinessSummary']
+		delete_if_exists(res.info, 'companyOfficers')
+		delete_if_exists(res.info, 'longBusinessSummary')
 		marketdb[symb] = res.info
 		market_str = json.dumps(marketdb)
 		filename = f'market.json'
