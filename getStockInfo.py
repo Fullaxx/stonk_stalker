@@ -9,5 +9,7 @@ if __name__ == '__main__':
 	parser = ArgumentParser()
 	parser.add_argument('--symbol', '-s', type=str, required=True)
 	args = parser.parse_args()
-	stock = yf.Ticker(args.symbol)
-	pprint(stock.info)
+	res = yf.Ticker(args.symbol)
+	del res.info['companyOfficers']
+	del res.info['longBusinessSummary']
+	pprint(res.info)

@@ -100,29 +100,13 @@ def gen_index_html(tables_list, json_update_interval):
 	html += '</html>'
 	write_to_file(html, 'index.html')
 
-def update_symbol_data(symb, symb_data, info, obj_name):
-	if obj_name not in info:
-		print(f'{symb} has no {obj_name} object')
-	else:
-		symb_data[obj_name] = info[obj_name]
-
 def load_market_data(symb_list, marketdb):
 	for symb in symb_list:
 		symb_data = {}
 		res = yf.Ticker(symb)
-		update_symbol_data(symb, symb_data, res.info, 'currentPrice')
-		update_symbol_data(symb, symb_data, res.info, 'forwardPE')
-		update_symbol_data(symb, symb_data, res.info, 'marketCap')
-		update_symbol_data(symb, symb_data, res.info, 'pegRatio')
-		update_symbol_data(symb, symb_data, res.info, 'previousClose')
-		update_symbol_data(symb, symb_data, res.info, 'priceToSalesTrailing12Months')
-		update_symbol_data(symb, symb_data, res.info, 'regularMarketPreviousClose')
-		update_symbol_data(symb, symb_data, res.info, 'revenuePerShare')
-		update_symbol_data(symb, symb_data, res.info, 'shortPercentOfFloat')
-		update_symbol_data(symb, symb_data, res.info, 'shortRatio')
-		update_symbol_data(symb, symb_data, res.info, 'totalCashPerShare')
-		update_symbol_data(symb, symb_data, res.info, 'trailingPE')
-		marketdb[symb] = symb_data
+		del res.info['companyOfficers']
+		del res.info['longBusinessSummary']
+		marketdb[symb] = res.info
 		market_str = json.dumps(marketdb)
 		filename = f'market.json'
 		print(f'Writing {filename} ...')
