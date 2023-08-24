@@ -80,14 +80,14 @@ function price_update(symb, info)
 {
   td = document.getElementById(symb + "_price");
   price = info.currentPrice.toFixed(2);
-  td.innerHTML = price;
+  if(price) { td.innerHTML = price; }
 }
 
 function close_update(symb, info)
 {
   td = document.getElementById(symb + "_close");
   close = info.previousClose.toFixed(2);
-  td.innerHTML = close;
+  if(close) { td.innerHTML = close; }
 }
 
 function mcap_update(symb, info)
@@ -113,7 +113,7 @@ function fpe_update(symb, info)
   td = document.getElementById(symb + "_fpe");
   if(!td) { return; }
   pe = info.forwardPE;
-  td.innerHTML = pe.toFixed(2);
+  if(pe) { td.innerHTML = pe.toFixed(2); }
 }
 
 function pst12_update(symb, info)
@@ -121,7 +121,7 @@ function pst12_update(symb, info)
   td = document.getElementById(symb + "_pst12");
   if(!td) { return; }
   pst = info.priceToSalesTrailing12Months;
-  td.innerHTML = pst.toFixed(2);
+  if(pst) { td.innerHTML = pst.toFixed(2); }
 }
 
 function update_symbols()
