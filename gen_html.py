@@ -62,6 +62,14 @@ def gen_html_table(tbl):
 			html += f'<td id={symb}_fpe></td>'
 		html += '</tr>'
 
+	pst12_toggle = os.getenv('DISPLAY_PST12_RATIO')
+	if (pst12_toggle is not None) and (pst12_toggle == '1'):
+		html += '<tr>'
+		html += '<td>PST12</td>'
+		for symb in symb_list:
+			html += f'<td id={symb}_pst12></td>'
+		html += '</tr>'
+
 	html += '</table>'
 	html += '</br>'
 	return html

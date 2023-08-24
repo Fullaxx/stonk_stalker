@@ -116,6 +116,14 @@ function fpe_update(symb, info)
   td.innerHTML = pe.toFixed(2);
 }
 
+function pst12_update(symb, info)
+{
+  td = document.getElementById(symb + "_pst12");
+  if(!td) { return; }
+  pst = info.priceToSalesTrailing12Months;
+  td.innerHTML = pst.toFixed(2);
+}
+
 function update_symbols()
 {
   $.getJSON( "market.json", function(data) {
@@ -127,6 +135,7 @@ function update_symbols()
       move_update(key, data[key]);
       mcap_update(key, data[key]);
       fpe_update(key, data[key]);
+      pst12_update(key, data[key]);
     }
   });
 }
