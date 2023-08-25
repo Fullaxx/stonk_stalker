@@ -31,7 +31,7 @@ def gen_html_table(tbl):
 	html += '<tr>'
 	html += '<td>$</td>'
 	for symb in symb_list:
-		html += f'<td id={symb}_price></td>'
+		html += f'<td id={symb}_currentPrice></td>'
 	html += '</tr>'
 
 	html += '<tr>'
@@ -43,7 +43,7 @@ def gen_html_table(tbl):
 	html += '<tr>'
 	html += '<td>Close</td>'
 	for symb in symb_list:
-		html += f'<td id={symb}_close></td>'
+		html += f'<td id={symb}_previousClose></td>'
 	html += '</tr>'
 
 	mc_toggle = os.getenv('DISPLAY_MARKET_CAP')
@@ -59,7 +59,7 @@ def gen_html_table(tbl):
 		html += '<tr>'
 		html += '<td>FPE</td>'
 		for symb in symb_list:
-			html += f'<td id={symb}_fpe></td>'
+			html += f'<td id={symb}_forwardPE></td>'
 		html += '</tr>'
 
 	pst12_toggle = os.getenv('DISPLAY_PST12_RATIO')
@@ -67,7 +67,7 @@ def gen_html_table(tbl):
 		html += '<tr>'
 		html += '<td>PST12</td>'
 		for symb in symb_list:
-			html += f'<td id={symb}_pst12></td>'
+			html += f'<td id={symb}_priceToSalesTrailing12Months></td>'
 		html += '</tr>'
 
 	html += '</table>'

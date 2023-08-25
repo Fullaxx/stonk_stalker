@@ -76,22 +76,6 @@ function move_update(symb, info)
   td.innerHTML = move_str;
 }
 
-function price_update(symb, info)
-{
-  td = document.getElementById(symb + "_price");
-  price = info.currentPrice.toFixed(2);
-  if(!price) { return; }
-  td.innerHTML = price;
-}
-
-function close_update(symb, info)
-{
-  td = document.getElementById(symb + "_close");
-  close = info.previousClose.toFixed(2);
-  if(!close) { return; }
-  td.innerHTML = close;
-}
-
 function mcap_update(symb, info)
 {
   td = document.getElementById(symb + "_cap");
@@ -110,22 +94,21 @@ function mcap_update(symb, info)
   td.innerHTML = value.toFixed(1) + units;
 }
 
-function fpe_update(symb, info)
+function cell_update(symb, info, datatag)
 {
-  td = document.getElementById(symb + "_fpe");
+  td = document.getElementById(symb + '_' + datatag);
   if(!td) { return; }
-  pe = info.forwardPE;
-  if(!pe) { return; }
-  td.innerHTML = pe.toFixed(2);
-}
-
-function pst12_update(symb, info)
-{
-  td = document.getElementById(symb + "_pst12");
-  if(!td) { return; }
-  pst = info.priceToSalesTrailing12Months;
-  if(!pst) { return; }
-  td.innerHTML = pst.toFixed(2);
+  if(datatag == 'priceToSalesTrailing12Months') {
+    data = info.priceToSalesTrailing12Months;
+  } else if(datatag == 'forwardPE') {
+    data = info.forwardPE;
+  } else if(datatag == 'previousClose') {
+    data = info.previousClose;
+  } else if(datatag == 'currentPrice') {
+    data = info.currentPrice;
+  }
+  if(!data) { return; }
+  td.innerHTML = data.toFixed(2);
 }
 
 function update_symbols()
@@ -134,12 +117,12 @@ function update_symbols()
     for (let key in data) {
       //console.log(key, data[key]);
       header_update(key, data[key]);
-      price_update(key, data[key]);
-      close_update(key, data[key]);
       move_update(key, data[key]);
       mcap_update(key, data[key]);
-      fpe_update(key, data[key]);
-      pst12_update(key, data[key]);
+      cell_update(key, data[key], 'currentPrice')
+      cell_update(key, data[key], 'previousClose')
+      cell_update(key, data[key], 'forwardPE')
+      cell_update(key, data[key], 'priceToSalesTrailing12Months')
     }
   });
 }
