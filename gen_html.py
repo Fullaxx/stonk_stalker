@@ -51,7 +51,7 @@ def gen_html_table(tbl):
 		html += '<tr>'
 		html += '<td>MCap</td>'
 		for symb in symb_list:
-			html += f'<td id={symb}_cap></td>'
+			html += f'<td id={symb}_mcap></td>'
 		html += '</tr>'
 
 	fpe_toggle = os.getenv('DISPLAY_FPE_RATIO')

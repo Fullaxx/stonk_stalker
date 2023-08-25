@@ -78,7 +78,7 @@ function move_update(symb, info)
 
 function mcap_update(symb, info)
 {
-  td = document.getElementById(symb + "_cap");
+  td = document.getElementById(symb + "_mcap");
   if(!td) { return; }
   mcap = info.marketCap;
   if(mcap >= 1e12) {
