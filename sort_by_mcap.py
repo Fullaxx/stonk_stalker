@@ -13,6 +13,7 @@ def sort_list(symb_list):
 	mcap_list = []
 	mcap_dict = {}
 	for symb in symb_list:
+		print(f'Gathering financials for {symb} ...')
 		res = yf.Ticker(symb)
 		if 'marketCap' not  in res.info:
 			print(f'{symb} has no marketCap object')
@@ -22,6 +23,7 @@ def sort_list(symb_list):
 		mcap_dict[str(mcap)] = symb
 	mcap_list.sort(reverse=True)
 #	print(mcap_list)
+	print("Sorted by marketCap:")
 	for m in mcap_list:
 		symb = mcap_dict[str(m)]
 #		print(f'{symb}: {m}')
