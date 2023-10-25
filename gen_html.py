@@ -70,6 +70,14 @@ def gen_html_table(tbl):
 			html += f'<td id={symb}_priceToSalesTrailing12Months></td>'
 		html += '</tr>'
 
+	urls_toggle = os.getenv('OTHER_URLS')
+	if (urls_toggle is not None) and (urls_toggle == '1'):
+		html += '<tr>'
+		html += '<td>URLS</td>'
+		for symb in symb_list:
+			html += f'<td><a href=https://finance.yahoo.com/quote/{symb}>YF</a>/<a href=https://gurufocus.com/stock/{symb}>GF</a></td>'
+		html += '</tr>'
+
 	html += '</table>'
 	html += '</br>'
 	return html
