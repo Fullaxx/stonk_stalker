@@ -29,7 +29,7 @@ RUN apt-get update && \
 # ------------------------------------------------------------------------------
 # Prepare the image
 COPY supervisord.conf /etc/supervisor/supervisord.conf
-COPY gen_html.py /app/
+COPY gen_html_yf.py /app/
 COPY static/* /www/static/
 COPY --from=build /dark/darkhttpd.exe /app/
 
