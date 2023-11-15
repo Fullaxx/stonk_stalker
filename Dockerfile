@@ -19,10 +19,11 @@ ENV DEBIAN_FRONTEND noninteractive
 
 # ------------------------------------------------------------------------------
 # Install software and clean up
+# WORKAROUND FOR BROKEN: pip3 install yfinance
 RUN apt-get update && \
 	apt-get install -y --no-install-recommends \
-	  supervisor python3-pip && \
-	pip3 install yfinance && \
+	  git python3-pip supervisor && \
+	pip install git+https://github.com/ranaroussi/yfinance@feature/cookie-and-crumb && \
 	apt-get clean && \
 	rm -rf /var/lib/apt/lists/* /var/tmp/* /tmp/*
 
