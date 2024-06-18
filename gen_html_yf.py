@@ -70,6 +70,14 @@ def gen_html_table(tbl):
 			html += f'<td id={symb}_priceToSalesTrailing12Months></td>'
 		html += '</tr>'
 
+	peg_toggle = os.getenv('DISPLAY_PEG_RATIO')
+	if (peg_toggle is not None) and (peg_toggle == '1'):
+		html += '<tr>'
+		html += '<td>PEG</td>'
+		for symb in symb_list:
+			html += f'<td id={symb}_pegRatio></td>'
+		html += '</tr>'
+
 	urls_toggle = os.getenv('OTHER_URLS')
 	if (urls_toggle is not None) and (urls_toggle == '1'):
 		html += '<tr>'

@@ -98,7 +98,9 @@ function cell_update(symb, info, datatag)
 {
   td = document.getElementById(symb + '_' + datatag);
   if(!td) { return; }
-  if(datatag == 'priceToSalesTrailing12Months') {
+  if(datatag == 'pegRatio') {
+    data = info.pegRatio;
+  } else if(datatag == 'priceToSalesTrailing12Months') {
     data = info.priceToSalesTrailing12Months;
   } else if(datatag == 'forwardPE') {
     data = info.forwardPE;
@@ -123,6 +125,7 @@ function update_symbols()
       cell_update(key, data[key], 'previousClose')
       cell_update(key, data[key], 'forwardPE')
       cell_update(key, data[key], 'priceToSalesTrailing12Months')
+      cell_update(key, data[key], 'pegRatio')
     }
   });
 }

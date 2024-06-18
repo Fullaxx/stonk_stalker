@@ -11,12 +11,16 @@ docker build -t="fullaxx/stonk_stalker" github.com/Fullaxx/stonk_stalker
 ```
 
 ## Stalk with extra info
-Links to other info: OTHER_URLS=1 \
-Market Cap info: DISPLAY_MARKET_CAP=1 \
-Forward PE Ratio: DISPLAY_FPE_RATIO=1
+Links to other info:        OTHER_URLS=1 \
+Market Cap info:            DISPLAY_MARKET_CAP=1 \
+Forward PE Ratio:           DISPLAY_FPE_RATIO=1 \
+Price to Sales (TTM) Ratio: DISPLAY_PST12_RATIO=1 \
+PEG Ratio:                  DISPLAY_PEG_RATIO=1
 ```
-docker run -d --rm -e OTHER_URLS=1 -e DISPLAY_MARKET_CAP=1 -e TICKER_TABLES="TECH=AAPL,MSFT,GOOG;CHIPS=NVDA,AMD,TSM;AUTO=F,GM,TSLA" -p 80:80 fullaxx/stonk_stalker
-docker run -d --rm -e OTHER_URLS=1 -e DISPLAY_FPE_RATIO=1  -e TICKER_TABLES="TECH=AAPL,MSFT,GOOG;CHIPS=NVDA,AMD,TSM;AUTO=F,GM,TSLA" -p 80:80 fullaxx/stonk_stalker
+docker run -d --rm -e OTHER_URLS=1 -e DISPLAY_MARKET_CAP=1  -e TICKER_TABLES="TECH=AAPL,MSFT,GOOG;CHIPS=NVDA,AMD,TSM;AUTO=F,GM,TSLA" -p 80:80 fullaxx/stonk_stalker
+docker run -d --rm -e OTHER_URLS=1 -e DISPLAY_FPE_RATIO=1   -e TICKER_TABLES="TECH=AAPL,MSFT,GOOG;CHIPS=NVDA,AMD,TSM;AUTO=F,GM,TSLA" -p 80:80 fullaxx/stonk_stalker
+docker run -d --rm -e OTHER_URLS=1 -e DISPLAY_PST12_RATIO=1 -e TICKER_TABLES="TECH=AAPL,MSFT,GOOG;CHIPS=NVDA,AMD,TSM;AUTO=F,GM,TSLA" -p 80:80 fullaxx/stonk_stalker
+docker run -d --rm -e OTHER_URLS=1 -e DISPLAY_PEG_RATIO=1   -e TICKER_TABLES="TECH=AAPL,MSFT,GOOG;CHIPS=NVDA,AMD,TSM;AUTO=F,GM,TSLA" -p 80:80 fullaxx/stonk_stalker
 ```
 
 ## Stalk with dark mode enabled
