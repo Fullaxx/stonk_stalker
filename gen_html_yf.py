@@ -1,3 +1,4 @@
+
 #!/usr/bin/env python3
 # pip3 install yfinance
 
@@ -128,7 +129,7 @@ def delete_if_exists(stock_d, key):
 	if key in stock_d:
 		del stock_d[key]
 
-def load_market_data(symb_list, marketdb):
+def load_market_data(symb_list, marketdb, request_delay):
 	for symb in symb_list:
 		symb_data = {}
 		res = yf.Ticker(symb)
@@ -139,19 +140,21 @@ def load_market_data(symb_list, marketdb):
 		filename = f'market.json'
 		print(f'Writing {filename} ...')
 		write_to_file(market_str, filename)
+#		Amount of time to wait in between yfinance requests
+		time.sleep(request_delay)
 
 # This function is pretty generic and could use some better logic to determine an active trading session
-def trading_is_active():
-	active = False
-	tz = timezone('US/Eastern')
-	now = datetime.now(tz)
-	day = now.strftime("%a")
-	hour = int(now.strftime("%H"))
-	if (day == 'Sun'): return False
-	if (day == 'Sat'): return False
-	if ((hour >= 9) and (hour <= 16)):
-		active = True
-	return active
+#def trading_is_active():
+#	active = False
+#	tz = timezone('US/Eastern')
+#	now = datetime.now(tz)
+#	day = now.strftime("%a")
+#	hour = int(now.strftime("%H"))
+#	if (day == 'Sun'): return False
+#	if (day == 'Sat'): return False
+#	if ((hour >= 9) and (hour <= 16)):
+#		active = True
+#	return active
 
 if __name__ == '__main__':
 	wwwdir = os.getenv('WWWDIR')
@@ -163,6 +166,10 @@ if __name__ == '__main__':
 	json_update_interval = os.getenv('JSON_UPDATE')
 	if json_update_interval is None: json_update_interval = '1000'
 
+	sleep_time = 30
+	if os.getenv('SLEEP_TIME') is not None:
+		sleep_time = int(os.getenv('SLEEP_TIME'))
+
 	symb_list = []
 	tables_list = ticker_tables.split(';')
 	for tbl in tables_list:
@@ -172,6 +179,6 @@ if __name__ == '__main__':
 	marketdb = {}
 	gen_index_html(tables_list, json_update_interval)
 	while True:
-		load_market_data(symb_list, marketdb)
-		sleep_time = 1 if trading_is_active() else 30
-		time.sleep(sleep_time)
+		load_market_data(symb_list, marketdb, sleep_time)
+#		sleep_time = 30 if trading_is_active() else 30
+#		time.sleep(sleep_time)
